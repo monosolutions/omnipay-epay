@@ -47,6 +47,16 @@ class Gateway extends AbstractGateway
         $this->parameters->set('merchantnumber', (string) $merchantNumber);
     }
 
+    public function setPaymenttype($paymenttype)
+    {
+        $this->parameters->set('paymenttype', $paymenttype);
+    }
+
+    public function setPaymentcollection($paymentcollection)
+    {
+        $this->parameters->set('paymentcollection', $paymentcollection);
+    }
+
     public function setSecret($secret)
     {
         $this->parameters->set('secret', $secret);
