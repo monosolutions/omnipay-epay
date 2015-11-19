@@ -46,8 +46,8 @@ class DeleteRequest extends CaptureRequest
 
 
         return $this->response = new RefundResponse($this, array(
-            'creditResult' => $result->creditResult,
-            'pbsResponse' => $result->pbsresponse,
+            'creditResult' => isset($result->creditResult) ? $result->creditResult : null,
+            'pbsResponse' => isset($result->pbsresponse) ? $result->pbsresponse : null,
             'epayresponse' => $result->epayresponse,
         ));
     }
