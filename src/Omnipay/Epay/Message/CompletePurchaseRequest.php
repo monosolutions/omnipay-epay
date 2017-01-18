@@ -10,9 +10,12 @@ use Omnipay\Common\Message\ResponseInterface;
  */
 class CompletePurchaseRequest extends PurchaseRequest
 {
+    protected $keys = ['txnid', 'orderid', 'amount', 'currency', 'date', 'time', 'txnfee', 'paymenttype', 'cardno'];
+
     public function getData()
     {
-        if($this->getParameter('secret') && !$this->verifyHash($this->httpRequest->query->all())) {
+        if ($this->getParameter('secret') && !$this->verifyHash($this->httpRequest->query->all())) {
+
             throw new InvalidResponseException('Invalid key');
         }
 
@@ -22,15 +25,21 @@ class CompletePurchaseRequest extends PurchaseRequest
     public function verifyHash($data)
     {
         $var = '';
-        foreach ($data as $key => $value) {
-            if($key != "hash") {
-                $var .= $value;
+        foreach ($this->keys as $key) {
+
+            if (array_key_exists($key, $data)) {
+                $var .= $data[$key];
             }
         }
 
         $genstamp = md5($var . $this->getParameter('secret'));
 
         return isset($data['hash']) && $genstamp == $data['hash'];
+    }
+
+    public function addKey($key)
+    {
+        $this->keys[] = $key;
     }
 
     public function sendData($data)

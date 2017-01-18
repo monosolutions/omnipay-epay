@@ -30,56 +30,130 @@ class Gateway extends AbstractGateway
             'secret' => '',
             'language' => '0',
             'ownreceipt' => '1',
-            'timeout'    => '',
+            'timeout' => null,
             'paymentcollection' => '1',
             'lockpaymentcollection' => '1',
-            'windowid' => '1'
+            'windowid' => '1',
         );
+    }
+
+    public function getTimeout()
+    {
+        return $this->getParameter('timeout');
     }
 
     public function setTimeout($timeout)
     {
-        $this->parameters->set('timeout', $timeout);
+        return $this->setParameter('timeout', $timeout);
+    }
+
+    public function getMerchantnumber()
+    {
+        return $this->getParameter('merchantnumber');
     }
 
     public function setMerchantnumber($merchantNumber)
     {
-        $this->parameters->set('merchantnumber', (string) $merchantNumber);
+        return $this->setParameter('merchantnumber', (string) $merchantNumber);
     }
 
     public function setPaymenttype($paymenttype)
     {
-        $this->parameters->set('paymenttype', $paymenttype);
+        return $this->setParameter('paymenttype', $paymenttype);
     }
 
     public function setPaymentcollection($paymentcollection)
     {
-        $this->parameters->set('paymentcollection', $paymentcollection);
+        return $this->setParameter('paymentcollection', $paymentcollection);
+    }
+
+    public function getPaymentcollection()
+    {
+        return $this->getParameter('paymentcollection');
+    }
+
+    public function getPaymenttype()
+    {
+        return $this->getParameter('paymenttype');
+    }
+
+    public function setLockpaymentcollection($lockpaymentcollection)
+    {
+        return $this->setParameter('lockpaymentcollection', $lockpaymentcollection);
+    }
+
+    public function getLockpaymentcollection()
+    {
+        return $this->getParameter('lockpaymentcollection');
+    }
+
+    public function getOwnreceipt()
+    {
+        return $this->getParameter('ownreceipt');
+    }
+
+    public function setOwnreceipt($ownreceipt)
+    {
+        return $this->setParameter('ownreceipt', $ownreceipt);
+    }
+
+    public function getWindowid()
+    {
+        return $this->getParameter('windowid');
+    }
+
+    public function getSecret()
+    {
+        return $this->getParameter('secret');
     }
 
     public function setSecret($secret)
     {
-        $this->parameters->set('secret', $secret);
+        return $this->setParameter('secret', $secret);
+    }
+
+    public function getLanguage()
+    {
+        return $this->getParameter('language');
     }
 
     public function setLanguage($language)
     {
-        $this->parameters->set('language', $language);
+        return $this->setParameter('language', $language);
     }
 
     public function setWindowstate($windowstate)
     {
-        $this->parameters->set('windowstate', $windowstate);
+        return $this->setParameter('windowstate', $windowstate);
     }
 
-    public function setWindowid($windowId) {
-        $this->parameters->set('windowid', $windowId);
+    public function setWindowid($windowId)
+    {
+        return $this->setParameter('windowid', $windowId);
     }
 
-    public function setMobile($mobile) {
-        $this->parameters->set('mobile', $mobile);
+    public function setMobile($mobile)
+    {
+        return $this->setParameter('mobile', $mobile);
+
     }
 
+    // This is the same in both instances since epay recommendes using the payment window.
+    public function authorize(array $parameters = array())
+    {
+        return $this->purchase($parameters);
+    }
+
+    // This is the same in both instances since epay recommendes using the payment window.
+    public function completeAuthorize(array $parameters = array())
+    {
+        return $this->purchase($parameters);
+    }
+
+    /**
+     * @param array $parameters
+     * @return PurchaseRequest
+     */
     public function purchase(array $parameters = array())
     {
         return $this->createRequest('\Omnipay\Epay\Message\PurchaseRequest', $parameters);

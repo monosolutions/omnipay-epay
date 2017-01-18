@@ -14,26 +14,31 @@ class CaptureRequest extends PurchaseRequest
 
     public function getSupportedKeys() {
 
-        return ['merchantnumber', 'amount', 'transactionid', 'group'];
+        return ['merchantnumber', 'amount', 'transactionId', 'group'];
     }
 
+    public function getGroup()
+    {
+        return $this->getParameter('group');
+    }
 
     public function setTransactionId($value)
     {
-        return $this->setParameter('transactionid', $value);
+        return $this->setParameter('transactionId', $value);
     }
 
     public function getData()
     {
-        $this->validate('merchantnumber', 'amount', 'transactionid');
+        $this->validate('merchantnumber', 'amount', 'transactionId');
 
         $data = array();
         foreach($this->getSupportedKeys() as $key) {
-            $value = $this->parameters->get($key);
+            $value = $this->get($key);
             if (!empty($value)) {
-                $data[$key] = $value;
+                $data[strtolower($key)] = $value;
             }
         }
+        $data['amount'] = $this->getAmountInteger();
 
         /** Hack from SOAP description */
         $data['pbsResponse'] = -1;

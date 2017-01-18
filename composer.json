@@ -9,10 +9,17 @@
         {
             "name": "Saidul Islam",
             "email": "saidul.04@gmail.com"
+        },
+        {
+            "name": "Thomas Faurbye Nielsen",
+            "email": "tfn@monosolutions.com"
         }
     ],
     "minimum-stability": "dev",
     "autoload": {
         "psr-0": { "Omnipay\\Epay\\" : "src/" }
+    },
+    "require-dev": {
+        "omnipay/tests": "~2.0"
     }
 }
