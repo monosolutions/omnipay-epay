@@ -19,6 +19,14 @@ class PurchaseRequest extends AbstractRequest
         return $this->setParameter('merchantnumber', $merchantnumber);
     }
 
+    public function setPassword($password)
+    {
+        return $this->setParameter('password', $password);
+    }
+
+    public function getPassword() {
+        return $this->getParameter('password');
+    }
     public function setCurrency($currency)
     {
         return $this->setParameter('currency', $currency);

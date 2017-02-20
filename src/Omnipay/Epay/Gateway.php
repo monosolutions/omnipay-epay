@@ -47,6 +47,17 @@ class Gateway extends AbstractGateway
     {
         return $this->setParameter('timeout', $timeout);
     }
+    
+    public function getPassword()
+    {
+        return $this->getParameter('password');
+    }
+
+    public function setPassword($password)
+    {
+        return $this->setParameter('password', $password);
+    }
+
 
     public function getMerchantnumber()
     {

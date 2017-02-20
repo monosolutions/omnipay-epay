@@ -15,7 +15,7 @@
             "email": "tfn@monosolutions.com"
         }
     ],
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "autoload": {
         "psr-0": { "Omnipay\\Epay\\" : "src/" }
     },
