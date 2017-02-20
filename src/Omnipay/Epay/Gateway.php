@@ -34,6 +34,7 @@ class Gateway extends AbstractGateway
             'paymentcollection' => '1',
             'lockpaymentcollection' => '1',
             'windowid' => '1',
+            'password' => '',
         );
     }
 

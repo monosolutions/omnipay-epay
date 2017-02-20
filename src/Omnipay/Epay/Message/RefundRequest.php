@@ -9,10 +9,6 @@ use Omnipay\Common\Message\ResponseInterface;
  */
 class RefundRequest extends CaptureRequest
 {
-    protected $endpoint = 'https://ssl.ditonlinebetalingssystem.dk/remote/payment.asmx';
-
-
-
     public function getData()
     {
         $this->validate('merchantnumber', 'amount', 'transactionid');
@@ -49,13 +45,5 @@ class RefundRequest extends CaptureRequest
         ));
     }
 
-    /**
-     * Send the request
-     *
-     * @return ResponseInterface
-     */
-    public function send()
-    {
-        return $this->sendData($this->getData());
-    }
+
 }

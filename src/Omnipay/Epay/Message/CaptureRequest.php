@@ -12,9 +12,10 @@ class CaptureRequest extends PurchaseRequest
     protected $endpoint = 'https://ssl.ditonlinebetalingssystem.dk/remote/payment.asmx';
 
 
-    public function getSupportedKeys() {
+    public function getSupportedKeys()
+    {
 
-        return ['merchantnumber', 'amount', 'transactionId', 'group'];
+        return ['merchantnumber', 'amount', 'transactionId', 'group', 'password'];
     }
 
     public function getGroup()
@@ -32,7 +33,7 @@ class CaptureRequest extends PurchaseRequest
         $this->validate('merchantnumber', 'amount', 'transactionId');
 
         $data = array();
-        foreach($this->getSupportedKeys() as $key) {
+        foreach ($this->getSupportedKeys() as $key) {
             $value = $this->get($key);
             if (!empty($value)) {
                 $data[strtolower($key)] = $value;
@@ -53,15 +54,17 @@ class CaptureRequest extends PurchaseRequest
      */
     public function sendData($data)
     {
-        $client = new \SoapClient($this->endpoint.'?WSDL');
+        $client = new \SoapClient($this->endpoint . '?WSDL');
         $result = $client->capture($data);
 
 
-        return $this->response = new CaptureResponse($this, array(
+        return $this->response = new CaptureResponse(
+            $this, array(
             'captureResult' => $result->captureResult,
             'pbsResponse' => $result->pbsResponse,
             'epayresponse' => $result->epayresponse,
-        ));
+        )
+        );
     }
 
     /**

@@ -42,6 +42,16 @@ class CompletePurchaseRequest extends PurchaseRequest
         $this->keys[] = $key;
     }
 
+    public function setKeys(array $keys)
+    {
+        $this->keys = $keys;
+    }
+
+    public function getKeys()
+    {
+        return $this->keys;
+    }
+
     public function sendData($data)
     {
         return $this->response = new CompletePurchaseResponse($this, $data);

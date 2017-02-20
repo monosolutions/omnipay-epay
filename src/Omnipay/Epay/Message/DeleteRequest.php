@@ -9,11 +9,9 @@ use Omnipay\Common\Message\ResponseInterface;
  */
 class DeleteRequest extends CaptureRequest
 {
-    protected $endpoint = 'https://ssl.ditonlinebetalingssystem.dk/remote/payment.asmx';
-
-    public function getSupportedKeys() {
-
-        return ['merchantnumber', 'transactionid', 'group'];
+    public function getSupportedKeys()
+    {
+        return ['merchantnumber', 'transactionid', 'group', 'password'];
     }
 
     public function getData()
@@ -21,7 +19,7 @@ class DeleteRequest extends CaptureRequest
         $this->validate('merchantnumber', 'transactionid');
 
         $data = array();
-        foreach($this->getSupportedKeys() as $key) {
+        foreach ($this->getSupportedKeys() as $key) {
             $value = $this->parameters->get($key);
             if (!empty($value)) {
                 $data[$key] = $value;
@@ -41,24 +39,16 @@ class DeleteRequest extends CaptureRequest
      */
     public function sendData($data)
     {
-        $client = new \SoapClient($this->endpoint.'?WSDL');
+        $client = new \SoapClient($this->endpoint . '?WSDL');
         $result = $client->delete($data);
 
 
-        return $this->response = new RefundResponse($this, array(
+        return $this->response = new RefundResponse(
+            $this, array(
             'creditResult' => isset($result->creditResult) ? $result->creditResult : null,
             'pbsResponse' => isset($result->pbsresponse) ? $result->pbsresponse : null,
             'epayresponse' => $result->epayresponse,
-        ));
-    }
-
-    /**
-     * Send the request
-     *
-     * @return ResponseInterface
-     */
-    public function send()
-    {
-        return $this->sendData($this->getData());
+        )
+        );
     }
 }
