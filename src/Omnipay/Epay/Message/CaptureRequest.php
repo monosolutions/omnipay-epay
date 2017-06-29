@@ -39,8 +39,11 @@ class CaptureRequest extends PurchaseRequest
                 $data[strtolower($key)] = $value;
             }
         }
-        $data['amount'] = $this->getAmountInteger();
 
+        $data['amount'] = $this->getAmountInteger();
+        if ($this->getPassword()) {
+            $data['pwd'] = $this->getPassword();
+        }
         /** Hack from SOAP description */
         $data['pbsResponse'] = -1;
         $data['epayresponse'] = -1;
@@ -57,13 +60,12 @@ class CaptureRequest extends PurchaseRequest
         $client = new \SoapClient($this->endpoint . '?WSDL');
         $result = $client->capture($data);
 
-
         return $this->response = new CaptureResponse(
             $this, array(
-            'captureResult' => $result->captureResult,
-            'pbsResponse' => $result->pbsResponse,
-            'epayresponse' => $result->epayresponse,
-        )
+                'captureResult' => $result->captureResult,
+                'pbsResponse' => $result->pbsResponse,
+                'epayresponse' => $result->epayresponse,
+            )
         );
     }
 

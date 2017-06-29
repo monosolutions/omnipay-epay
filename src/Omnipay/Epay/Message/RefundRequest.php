@@ -14,12 +14,16 @@ class RefundRequest extends CaptureRequest
         $this->validate('merchantnumber', 'amount', 'transactionid');
 
         $data = array();
-        foreach($this->getSupportedKeys() as $key) {
+        foreach ($this->getSupportedKeys() as $key) {
             $value = $this->parameters->get($key);
             if (!empty($value)) {
                 $data[$key] = $value;
             }
         }
+        if ($this->getPassword()) {
+            $data['pwd'] = $this->getPassword();
+        }
+        $data['amount'] = $this->getAmountInteger();
 
         /** Hack from SOAP description */
         $data['pbsresponse'] = -1;
@@ -34,7 +38,7 @@ class RefundRequest extends CaptureRequest
      */
     public function sendData($data)
     {
-        $client = new \SoapClient($this->endpoint.'?WSDL');
+        $client = new \SoapClient($this->endpoint . '?WSDL');
         $result = $client->credit($data);
 
 

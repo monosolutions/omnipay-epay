@@ -25,7 +25,9 @@ class DeleteRequest extends CaptureRequest
                 $data[$key] = $value;
             }
         }
-
+        if ($this->getPassword()) {
+            $data['pwd'] = $this->getPassword();
+        }
         /** Hack from SOAP description */
         $data['pbsresponse'] = -1;
         $data['epayresponse'] = -1;
