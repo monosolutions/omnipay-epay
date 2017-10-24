@@ -14,6 +14,11 @@ class DeleteRequest extends CaptureRequest
         return ['merchantnumber', 'transactionid', 'group', 'password'];
     }
 
+    public function setTransactionid($value)
+    {
+        return $this->setParameter('transactionid', $value);
+    }
+
     public function getData()
     {
         $this->validate('merchantnumber', 'transactionid');
