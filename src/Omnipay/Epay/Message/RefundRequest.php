@@ -9,9 +9,11 @@ use Omnipay\Common\Message\ResponseInterface;
  */
 class RefundRequest extends CaptureRequest
 {
+    protected $transactionIdField = 'transactionid';
+
     public function getData()
     {
-        $this->validate('merchantnumber', 'amount', 'transactionid');
+        $this->validate('merchantnumber', 'amount', $this->transactionIdField);
 
         $data = array();
         foreach ($this->getSupportedKeys() as $key) {

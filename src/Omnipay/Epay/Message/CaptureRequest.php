@@ -10,12 +10,12 @@ use Omnipay\Common\Message\ResponseInterface;
 class CaptureRequest extends PurchaseRequest
 {
     protected $endpoint = 'https://ssl.ditonlinebetalingssystem.dk/remote/payment.asmx';
-
+    protected $transactionIdField = 'transactionId';
 
     public function getSupportedKeys()
     {
 
-        return ['merchantnumber', 'amount', 'transactionId', 'group', 'password'];
+        return ['merchantnumber', 'amount', $this->transactionIdField, 'group', 'password'];
     }
 
     public function getGroup()
@@ -25,12 +25,12 @@ class CaptureRequest extends PurchaseRequest
 
     public function setTransactionId($value)
     {
-        return $this->setParameter('transactionId', $value);
+        return $this->setParameter($this->transctionIdField, $value);
     }
 
     public function getData()
     {
-        $this->validate('merchantnumber', 'amount', 'transactionId');
+        $this->validate('merchantnumber', 'amount', $this->transactionIdField);
 
         $data = array();
         foreach ($this->getSupportedKeys() as $key) {

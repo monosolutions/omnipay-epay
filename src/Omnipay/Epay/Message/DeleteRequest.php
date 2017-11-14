@@ -9,19 +9,17 @@ use Omnipay\Common\Message\ResponseInterface;
  */
 class DeleteRequest extends CaptureRequest
 {
+    protected $transactionIdField = 'transactionid';
+
     public function getSupportedKeys()
     {
-        return ['merchantnumber', 'transactionid', 'group', 'password'];
+        return ['merchantnumber', $this->transactionIdField, 'group', 'password'];
     }
 
-    public function setTransactionid($value)
-    {
-        return $this->setParameter('transactionid', $value);
-    }
 
     public function getData()
     {
-        $this->validate('merchantnumber', 'transactionid');
+        $this->validate('merchantnumber', $this->transactionIdField);
 
         $data = array();
         foreach ($this->getSupportedKeys() as $key) {
