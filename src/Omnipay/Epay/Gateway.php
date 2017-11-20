@@ -207,4 +207,12 @@ class Gateway extends AbstractGateway
         return $this->createRequest('\Omnipay\Epay\Message\DeleteRequest', $parameters);
     }
 
+    /**
+     * @param array $parameters
+     * @return DeleteRequest
+     */
+    public function getTransaction(array $parameters = [])
+    {
+        return $this->createRequest('\Omnipay\Epay\Message\GetTransactionRequest', $parameters);
+    }
 }
