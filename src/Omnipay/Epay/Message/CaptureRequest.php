@@ -25,7 +25,7 @@ class CaptureRequest extends PurchaseRequest
 
     public function setTransactionId($value)
     {
-        return $this->setParameter($this->transctionIdField, $value);
+        return $this->setParameter($this->transactionIdField, $value);
     }
 
     public function getData()
